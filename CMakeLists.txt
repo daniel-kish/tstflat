@@ -13,4 +13,4 @@ add_dependencies(reader schema_headers)
 add_dependencies(writer schema_headers)
 
 include_directories("\\Users\\Daniel\\flatbuffers\\include")
-include_directories(include)
+include_directories(gen_include)

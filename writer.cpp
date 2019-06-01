@@ -42,4 +42,5 @@ try{
 catch(const std::invalid_argument &ia)
 {
     std::cerr << "invalid_argument: " << ia.what() << '\n';
+    return 1;
 }
