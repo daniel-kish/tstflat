@@ -1,0 +1,17 @@
+enum Occupation : byte
+{
+	Unoccupied,
+	Worker,
+	Writer,
+	Developer,
+	Doctor
+}
+
+table Person
+{
+	name: string (required);
+	lastname: string (required);
+	occupation: Occupation;
+}
+
+root_type Person;
