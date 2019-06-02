@@ -1,3 +1,5 @@
+include "Book.fbs";
+
 enum Occupation : byte
 {
 	Unoccupied,
@@ -13,6 +15,7 @@ table Person
 	name: string (required);
 	lastname: string (required);
 	occupation: Occupation;
+	book: [ubyte] (nested_flatbuffer: "Book");
 }
 
 root_type Person;

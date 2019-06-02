@@ -3,6 +3,7 @@
 #include <iterator>
 
 #include "Person_generated.h"
+#include "Book_generated.h"
 
 Occupation from_string(std::string s)
 {
@@ -17,20 +18,42 @@ Occupation from_string(std::string s)
     throw std::invalid_argument("'" + s + "' not in enum values set");
 }
 
-int main(int argc, char** argv)
-try{
-    std::ifstream is(argv[1]);
-    std::string name, lastname, occStr;
+flatbuffers::DetachedBuffer CreateBookBuffer(std::string name,
+                                       std::string datePublished)
+{
+    flatbuffers::FlatBufferBuilder fbb;
 
-    is >> name >> lastname;
-    is >> occStr;
+    auto oBook = CreateBook(fbb, fbb.CreateString(name.c_str()),
+               fbb.CreateString(datePublished.c_str()));
+
+    fbb.Finish(oBook);
+    return fbb.Release();
+}
+
+int main(int argc, char** argv)
+try
+{
+    using namespace flatbuffers;
+
+    std::ifstream is(argv[1]);
+    std::string name, lastname, occStr, bookName, bookDatePublished;
+
+    is >> name >> lastname >> occStr >> bookName >> bookDatePublished;
 
     flatbuffers::FlatBufferBuilder fbb;
 
     Occupation occ = from_string(occStr);
 
+    Offset<Vector<uint8_t>> oBook{};
+
+    if (!bookName.empty() && !bookDatePublished.empty())
+    {
+        auto bookBuf = CreateBookBuffer(bookName, bookDatePublished);
+        oBook = fbb.CreateVector(bookBuf.data(), bookBuf.size());
+    }
+
     auto oPerson = CreatePerson(fbb, fbb.CreateString(name.c_str()),
-                 fbb.CreateString(lastname.c_str()), occ);
+                 fbb.CreateString(lastname.c_str()), occ, oBook);
 
     fbb.Finish(oPerson);
     auto buf = fbb.Release();

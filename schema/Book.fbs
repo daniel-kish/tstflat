@@ -1,0 +1,8 @@
+
+table Book
+{
+	name: string (required);
+	datePublished: string (required);
+}
+
+root_type Book;
