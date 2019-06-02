@@ -15,12 +15,12 @@ if '1' in sys.argv:
     with open('data.txt', 'w') as f:
         f.write('Le Corbusier Architect')
 
-    assert os.system(writer_exe + ' data.txt') == 0, 'writer failed'
-    assert os.system(reader_exe + ' person.bin') == 0, 'reader failed'
     assert os.path.exists('data.txt'), "data.txt wasn't generated"
-    os.remove('data.txt')
+    assert os.system(writer_exe + ' data.txt') == 0, 'writer failed'
     assert os.path.exists('person.bin'), "person.bin wasn't generated"
+    assert os.system(reader_exe + ' person.bin') != 0, 'reader succeeded'
     os.remove('person.bin')
+    os.remove('data.txt')
 
     print('\n')
 
