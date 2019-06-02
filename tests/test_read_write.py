@@ -10,7 +10,7 @@ writer_exe = os.path.join(bin_dir, 'writer.exe')
 # case 'Normal communication'
 print('case 1')
 with open('data.txt', 'w') as f:
-    f.write('John Watson Doctor')
+    f.write('Le Corbusier Architect')
 
 assert os.system(writer_exe + ' data.txt') == 0, 'writer failed'
 assert os.system(reader_exe + ' person.bin') == 0, 'reader failed'
@@ -18,6 +18,8 @@ assert os.path.exists('data.txt'), "data.txt wasn't generated"
 os.remove('data.txt')
 assert os.path.exists('person.bin'), "person.bin wasn't generated"
 os.remove('person.bin')
+
+exit()
 
 print('\n')
 

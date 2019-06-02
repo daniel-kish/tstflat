@@ -36,8 +36,9 @@ int main(int argc, char **argv)
 
     auto pPerson = GetPerson(buf.data());
 
-    std::cout << pPerson->name()->c_str() << ' ' << pPerson->lastname()->c_str()
-              << ' ' << EnumNameOccupation(pPerson->occupation()) << '\n';
+    std::cout << pPerson->name()->c_str() << ' '
+              << pPerson->lastname()->c_str()
+              << " '" << EnumNameOccupation(pPerson->occupation()) << "'\n";
 
     switch(pPerson->occupation())
     {
@@ -52,6 +53,7 @@ int main(int argc, char **argv)
         case Occupation::Doctor:
             std::cout << "Cure my disease\n"; break;
         default:
-            std::cout << "I dunnow\n";
+            std::cout << "I know nothing about occupation '"
+                      << static_cast<int>(pPerson->occupation()) << "'\n";
     }
 }
